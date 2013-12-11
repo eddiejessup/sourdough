@@ -1,0 +1,39 @@
+About a year ago I helped out teaching a first-year undergrad course on programming. One of the projects they could try was an interesting algorithm for generating patterns. The idea is that you have a set of fixed points in space, $\{\mathbf{r}_j\}$, and you have a moveable point, $\mathbf{x}(i)$ (at some initial position $\mathbf{x}(0)$, whose value is not usually important). At each iteration, $i$, you pick an index, $j$, and move $\mathbf{x}$ towards $\mathbf{r}_j$ by some constant fraction, $\mathrm{d}$, of the separation vector between $\mathbf{x}$ and $\mathbf{r}_j$,
+
+$\mathbf{x}(i+1) = \mathbf{x}(i) + \mathrm{d} (\mathbf{r}_j - \mathbf{x}(i))$
+
+After you've iterated this algorithm long enough, you can look at the probability distribution of $\mathbf{x}$, and hopefully it will be something with more structure than mess.
+
+So the choices you have are:
+The number and positions of $\{\mathbf{r}_j\}$
+The method of picking $j$
+The value of $\mathrm{d}$
+This may sound quite abstract, so here's an example (the first example the students were asked to implement, in fact):
+3 fixed points, placed so as to define an equilateral triangle
+Pick $j$ randomly and uniformly
+$\mathrm{d}=0.5$
+Shown below is a colour plot of the spatial probability distribution of $\mathbf{x}$. The fixed points are also shown, in their black blob representation,
+
+
+
+Hey it's a Serpinski triangle! $\mathbf{x}$ never goes in the triangles, and is otherwise uniformly distributed. I liked that. Just to show magical things don't always happen, here's the distributions for the cases $\mathrm{d} = 0.1$, $\mathrm{d} = 1/3$ and $\mathrm{d} = 2/3$,
+
+
+
+The final part of the project had the students use 4 points defining a square for $\{\mathbf{r}_j\}$, with $\mathrm{d}=0.5$. If $j$ is picked randomly, the result is a uniform distribution,
+
+
+
+which is fairly interesting in itself. But what if instead of picking $j$ randomly, it's chosen by reading a text file containing characters representing the genetic letters of a genome? Each character is associated with an index $j$, and thus a point $\mathbf{r}_j$, and at each iteration $j$ is determined by reading the next character in the file. Doing this exposes the genomic structure in a remarkable way, showing visually the frequency of particular sequences of letters,
+
+
+
+So since I had to implement this stuff myself for the purposes of teaching the course, I thought I might try to do a bit more with the code I had. I associated each point of a square with the roman letters a, e, i and o, and fed in lumps of text in place of the genome. My rough idea was that a distinctive 'fingerprint' might be identifiable for a particular author, date and/or language, when there's a large enough body of text available. Let's compare the complete works of Shakespeare (left) to James Joyce's Ulysses (right),
+
+
+
+Here is hard evidence that the works of Shakespeare weren't written by a million monkeys bashing on typewriters -- the distribution is non-uniform! (I seem to remember hearing that conspiracy theory at some point.) I should point out that, because Ulysses is shorter than T.C.W.O.S, I truncated the latter in the interests of fairness. Adjusting for that, Jimmy's distribution looks more uniform than Will's, and indeed it is, with a standard deviation of $\sigma_w=4$ compared with $\sigma_w=13$. This obviously means that Jacob had more varied a vocabulary than Wilhelm. If we feed in a lot of paragraphs of Lorem Ipsum, as an approximation of the complete works of an unimaginative but very determined writer, we get,
+
+
+
+The distribution is similar to the Serpinski triangle -- everywhere either zero or a constant. It has a standard deviation of $\sigma_w=37$. Such a non-uniform distribution proves that James Joyce was a better writer than Shakespeare, and, more than that, the algorithm can provide a visual demonstration of the literary worth of any writer.
