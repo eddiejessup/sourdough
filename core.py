@@ -3,7 +3,8 @@ import matplotlib as mpl
 import matplotlib.pyplot as pp
 
 class PointPicker(object):
-    ''' Pick points randomly
+    '''
+    Pick points randomly
     '''
     def __init__(self, rs):
         self.rs = rs
@@ -12,7 +13,8 @@ class PointPicker(object):
         return self.rs[np.random.randint(len(self.rs))]
 
 class StreamPicker(PointPicker):
-    ''' Pick points from a text file
+    '''
+    Pick points from a text file
     '''
     def __init__(self, rs, f, cs):
         if len(rs) != len(cs):
@@ -29,8 +31,9 @@ class StreamPicker(PointPicker):
         return self.rs[self.cs.index(c)]
 
 class DonkeyWalk(object):
-    ''' Iterate the Donkey's Walk algorithm
-        (Note: nobody else calls it that, I don't know if it has a name)
+    '''
+    Iterate the Donkey's Walk algorithm
+    (Note: nobody else calls it that, I don't know if it has a name)
     '''
     def __init__(self, x_0, d, picker):
         self.x = x_0
@@ -41,11 +44,13 @@ class DonkeyWalk(object):
         self.x += d * (self.picker.pick() - self.x)
 
 class DonkeyWalkLogger(object):
-    ''' Keep track of the state of the algorithm iterator's state
+    '''
+    Keep track of the state of the algorithm iterator's state
     '''
     def __init__(self, dw, dat_max=np.inf):
-        ''' dw: algorithm iterator object
-            dat_max: maximum number of states to track before complaining
+        '''
+        dw: algorithm iterator object
+        dat_max: maximum number of states to track before complaining
         '''
         self.dw = dw
         self.dat_max = dat_max
